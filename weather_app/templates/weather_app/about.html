@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us</title>
+    <link rel="icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1f618d; /* Background color similar to WeatherApp */
+            color: #fff;
+            text-align: center;
+        }
+
+        header {
+            background-color: #3cb371;
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .homehref{
+            text-decoration: none;
+            position: absolute;
+            top: 7rem;
+            right: 12.5rem;
+        }
+        .feedbackhref{
+            position: absolute;
+            top: 7rem;
+            right: 7rem;
+        }
+        .logouthref{
+            position: absolute;
+            top: 7rem;
+            right: 3rem;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .logo {
+            width: 95px;
+            margin-right: 10px;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Arapey', serif;
+            font-size: 2rem;
+        }
+
+        .live-time {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 9rem;
+            color: white;
+        }
+
+        .about-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 10px; /* Adjust the border radius as needed */
+            background-color: #fff; /* Content background color */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #333;
+            text-align: left;
+        }
+        h3{
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+        }
+
+        footer {
+            background-color: #3cb371; /* Emerald Green */
+            color: #fff;
+            height: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            margin-top: 4%;
+        }
+
+        .additional-info {
+            margin-top: 1rem;
+        }
+
+        .live-date {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 13.5rem;
+            color: white;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.back-button{
+            position: absolute;
+            bottom: -100%;
+            left: 3rem;
+        }
+        button:hover {
+            background-color: #2980b9; /* Belize Hole */
+        }
+        button.back-button:hover {
+            background-color: #c0392b;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'D.png' %}" alt="Weather Logo" class="logo">
+        <h1>Weather and Maps</h1>
+        <h3>User: {{ request.session.username }}</h3>
+        <div class="live-time" id="live-time"></div>
+         <div> <a href="{% url 'home' %}" class="homehref">Home |</a></div>
+        <div> <a href="{% url 'feedback' %}" class="feedbackhref">Feedback |</a></div>
+        <div> <a href="{% url 'logout' %}" class="logouthref">Logout</a></div>
+        <div class="live-date" id="live-date"></div>
+    </header>
+
+    <main>
+
+        <div class="about-content">
+            <br><h1 style="text-align:center;">About Us</h1>
+            <h2>Our Story</h2>
+            <p>
+                Welcome to Weather and Maps, where our journey began with a simple yet ambitious goal: to provide users with accurate and reliable weather forecasts along with intuitive mapping experiences.
+            </p>
+            <p>
+                The idea originated from a passion for making weather information accessible to everyone in a way that is both informative and user-friendly. We saw the need for a platform that not only delivers forecasts but also helps users plan their activities with confidence.
+            </p>
+
+            <h2>Our Mission</h2>
+            <p>
+                At Weather and Maps, our mission is to empower individuals with the information they need to make informed decisions about their daily activities. We strive to offer a seamless and user-friendly platform that keeps you updated on current weather conditions and aids in effective trip planning.
+            </p>
+            <p>
+                Our commitment extends beyond providing basic weather data. We believe that by offering valuable insights, we can enhance the overall experience of our users, ensuring they are well-prepared for whatever the weather may bring.
+            </p>
+
+            <h2>Commitment to Quality</h2>
+            <p>
+                We are committed to delivering a high-quality user experience. Our team of dedicated professionals works tirelessly to ensure that the data we provide is accurate, up-to-date, and presented in a way that is easy to understand.
+            </p>
+            <p>
+                Quality is at the core of everything we do. From the accuracy of our weather forecasts to the responsiveness of our user interface, we strive for excellence in every aspect. Your trust in our platform is our driving force, and we take that responsibility seriously.
+            </p>
+
+            <h2>Innovation in Weather Technology</h2>
+            <p>
+                Weather and Maps is at the forefront of innovation in weather technology. We leverage the latest advancements to bring you cutting-edge features, ensuring that you have access to the most advanced tools for understanding and navigating the weather.
+            </p>
+            <p>
+                Our commitment to innovation extends to the continuous improvement of our platform. We embrace emerging technologies to enhance our services and provide you with the best possible experience. From advanced mapping features to real-time weather updates, we are dedicated to staying ahead of the curve.
+            </p>
+
+            <h2>Your Trusted Weather Companion</h2>
+            <p>
+                Thank you for choosing Weather and Maps as your trusted weather companion. Whether you're a frequent traveler or someone who likes to stay informed about local conditions, we're here to make your experience enjoyable and worry-free.
+            </p>
+            <p>
+                We understand the importance of reliable information, and we take pride in being the go-to source for weather-related insights. Our goal is to be the companion you can rely on, helping you navigate your day with confidence, regardless of the weather conditions.
+            </p>
+
+            <h2>Explore the World with Confidence</h2>
+            <p>
+                Explore the world with confidence using BJ weather forecasts and maps. We appreciate your trust in our services and look forward to continuing to serve you with excellence.
+            </p>
+            <p>
+                Our commitment to empowering you with accurate information and intuitive tools remains unwavering. As you explore new horizons, let Weather and Maps be your guide, providing you with the weather insights you need to make the most of every journey.
+            </p>
+
+            <h2>Contact us: <a style="color: #1f618d; font-size: 70%;" href="https://gmail.com">BJ_Weatherandmaps@gmail.com</a> </h2>
+        </div>
+    </main>
+    <button onclick="goBack()" class="back-button">BACK</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+    <footer>
+        <div class="additional-info">
+            <p>Explore the world with BJ weather forecasts and maps</p>
+        </div>
+        <p>&copy; 2023 Weather and Maps App. All rights reserved.</p>
+        <p>By using our services, you agree to our <a href="{% url 'privacy_terms' %}">Privacy Policy and Terms of Services</a> </p>
+    </footer>
+    <script src="{% static 'app.js' %}"></script>
+
+</html>

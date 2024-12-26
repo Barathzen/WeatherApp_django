@@ -1,0 +1,639 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Forecast</title>
+    <link rel="icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'D.png' %}" type="image/x-icon">
+
+    <style>
+        /* Internal CSS */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-repeat: no-repeat;
+            background-position: center center; /* Adjust the values as needed */
+            background-size: cover;
+            margin: 0;
+            padding: 0;
+            background-color: #1f618d ;
+            color: #333;
+        }
+
+        form {
+            margin-left: 0.1%;
+            margin-top: 2%;
+            margin-bottom: 3%;
+            display: flex;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 1px;
+            font-size: 1.5rem;
+            color: dark-gray;
+            margin-right: 3px;
+        }
+
+        input{
+            padding: 0.1rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc; /* Light Gray */
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        header {
+            background-color: #3cb371;
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 95px;
+            margin-right: 10px;
+        }
+
+         a {
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            margin-left: 2px;
+        }
+        .homehref:hover, .abouthref:hover, .feedbackhref:hover, .logouthref:hover {
+            color: #e74c3c; /* Change color on hover */
+        }
+        .homehref{
+            position: absolute;
+            top: 7rem;
+            right: 16.5rem;
+            transition: color 0.3s;
+        }
+
+        .abouthref{
+            position: absolute;
+            top: 7rem;
+            right: 12.5rem;
+            transition: color 0.3s;
+        }
+        .feedbackhref{
+            position: absolute;
+            top: 7rem;
+            right: 7rem;
+            transition: color 0.3s;
+        }
+        .logouthref{
+            position: absolute;
+            top: 7rem;
+            right: 3rem;
+            transition: color 0.3s;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Arapey', serif;
+            font-size: 2rem;
+        }
+
+        .live-time {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 9rem;
+            color: white;
+        }
+
+        h4{
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+        }
+
+        #city {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e74c3c;
+
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .location-selection {
+            margin-left: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .weather-cards {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+
+
+        .weather-card {
+            background: linear-gradient(to right,#bcd2d0 , #bcd2d0);
+            border: 1px solid #1f618d;
+            border-radius: 10px;
+            padding: 2rem;
+            margin: 1rem;
+            margin-left: -22%;
+            margin-bottom: 2rem;
+            max-width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, background 1s; /* Add background transition */
+        }
+
+
+        h2 {
+            color: #e74c3c; /* Alizarin Crimson */
+        }
+
+        #refresh-button {
+            background-color: #3498db; /* Dodger Blue */
+            color: #fff;
+            padding: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        #refresh-button:hover {
+            background-color: #2980b9; /* Belize Hole */
+        }
+
+        footer {
+            background-color: #3cb371; /* Emerald Green */
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .additional-info {
+            margin-top: 1rem;
+        }
+
+        .live-date {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 13.5rem;
+            color: white;
+}
+
+        .clear-sky, .clear, .few-clouds, .scattered-clouds, .broken-clouds, .overcast-clouds, .light-rain, .moderate-rain, .heavy-intensity-rain, .very-heavy-rain, .extreme-rain, .light-intensity-drizzle, .drizzle, .heavy-intensity-drizzle, .thunderstorm-with-light-rain, .thunderstorm-with-rain, .thunderstorm-with-heavy-rain, .light-thunderstorm, .thunderstorm, .light-snow, .snow, .heavy-snow, .sleet, .shower-sleet, .mist, .smoke, .haze, .dust, .fog, .sand, .volcanic-ash, .squalls, .tornado, .generic{
+            border: 1px solid #ff9966; /* Light Coral */
+            border-radius: 10px;
+            padding: 1.5rem;
+            color: #fff;
+            text-shadow: 0 0 3px #FF0000, 0 0 5px #c90076;
+            margin: 1rem;
+            width: 95%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .clear-sky{
+            background-image: url('{% static 'clear-sky.gif' %}');
+        }
+        .clear{
+            background-image: url('{% static 'clear.gif' %}');
+        }
+        .few-clouds{
+            background-image: url('{% static 'few-clouds.gif' %}');
+        }
+        .scattered-clouds{
+            background-image: url('{% static 'scattered-clouds.gif' %}');
+        }
+        .broken-clouds{
+            background-image: url('{% static 'broken-clouds.gif' %}');
+        }
+        .overcast-clouds{
+            background-image: url('{% static 'overcast-clouds.gif' %}');
+        }
+        .light-rain{
+            background-image: url('{% static 'light-rain.gif' %}');
+        }
+        .moderate-rain{
+            background-image: url('{% static 'moderate-rain.gif' %}');
+        }
+        .heavy-intensity-rain{
+            background-image: url('{% static 'heavy-intensity-rain.gif' %}');
+        }
+        .very-heavy-rain{
+            background-image: url('{% static 'very-heavy-rain.gif' %}');
+        }
+        .extreme-rain{
+            background-image: url('{% static 'extreme-rain.gif' %}');
+        }
+        .light-intensity-drizzle{
+            background-image: url('{% static 'light-intensity-drizzle.gif' %}');
+        }
+        .drizzle{
+            background-image: url('{% static 'drizzle.gif' %}');
+        }
+        .heavy-intensity-drizzle{
+            background-image: url('{% static 'heavy-intensity-drizzle.gif' %}');
+        }
+        .thunderstorm-with-light-rain{
+            background-image: url('{% static 'thunderstorm-with-light-rain.gif' %}');
+        }
+        .thunderstorm-with-rain{
+            background-image: url('{% static 'thunderstorm-with-rain.gif' %}');
+        }
+        .thunderstorm-with-heavy-rain{
+            background-image: url('{% static 'thunderstorm-with-heavy-rain.gif' %}');
+        }
+        .light-thunderstorm{
+            background-image: url('{% static 'light-thunderstorm.gif' %}');
+        }
+        .thunderstorm{
+            background-image: url('{% static 'thunderstorm.gif' %}');
+        }
+        .light-snow{
+            background-image: url('{% static 'light-snow.gif' %}');
+        }
+        .snow{
+            background-image: url('{% static 'snow.gif' %}');
+        }
+        .heavy-snow{
+            background-image: url('{% static 'heavy-snow.gif' %}');
+        }
+        .sleet{
+            background-image: url('{% static 'sleet.gif' %}');
+        }
+        .shower-sleet{
+            background-image: url('{% static 'shower-sleet.gif' %}');
+        }
+        .mist{
+            background-image: url('{% static 'mist.gif' %}');
+        }
+        .smoke{
+            background-image: url('{% static 'smoke.gif' %}');
+        }
+        .haze{
+            background-image: url('{% static 'haze.gif' %}');
+        }
+        .dust{
+            background-image: url('{% static 'dust.gif' %}');
+        }
+        .fog{
+            background-image: url('{% static 'fog.gif' %}');
+        }
+        .sand{
+            background-image: url('{% static 'sand.gif' %}');
+        }
+        .volcanic-ash{
+            background-image: url('{% static 'volcanic-ash.gif' %}');
+        }
+        .squalls{
+            background-image: url('{% static 'squalls.gif' %}');
+        }
+        .tornado{
+            background-image: url('{% static 'tornado.gif' %}');
+        }
+        .generic {
+            background-color: #ffd699;
+        }
+
+        .forecast-day {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .forecast-card {
+            flex-wrap: wrap;
+            width: 9%;
+            margin: 1.5rem;
+        }
+        button.back-button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            margin-left: 1rem;
+        }
+
+        button.back-button:hover {
+            background-color: #c0392b;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'D.png' %}" alt="Weather Logo" class="logo">
+        <h1>Weather Predictions</h1>
+        <div class="live-time" id="live-time"></div>
+        <h4>User: {{ request.session.username }}</h4>
+        <div> <a href="{% url 'home' %}" class="homehref">Home |</a></div>
+        <div> <a href="{% url 'about' %}" class="abouthref">About |</a></div>
+        <div> <a href="{% url 'feedback' %}" class="feedbackhref">Feedback |</a></div>
+        <div> <a href="{% url 'logout' %}" class="logouthref">Logout</a></div>
+        <div class="live-date" id="live-date"></div>
+    </header>
+
+     <main>
+          <form method="post" action="{% url 'weather_forecast' %}">
+            {% csrf_token %}
+            <br>
+            <input type="text" id="city" name="city" placeholder="Enter city name" required>
+            <button type="submit" id="button">Get Weather</button>
+          </form>
+            {% if temperature %}
+            <section class="location-selection">
+
+            </section>
+
+            <section class="weather-cards">
+
+                <div class="weather-card" id="weather">
+                    <h2>Current City: {{ city }}</h2>
+                    <h2>Current Weather</h2>
+                    <p>Temperature: {{ temperature }}°C</p>
+                </div>
+
+                </div>
+
+
+                <br>
+
+                <h2 style="position:absolute; top: 70%;" >3-Day Forecast</h2>
+                <div class="forecast-day">
+                    {% for day in forecast %}
+                                <div class="forecast-card">
+                                    {% if day.description == 'clear sky' %}
+                                        <div class="clear-sky">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'clear' %}
+                                        <div class="clear">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+
+                                    {% elif day.description == 'few clouds' %}
+                                        <div class="few-clouds">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'scattered clouds' %}
+                                        <div class="scattered-clouds">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'broken clouds' %}
+                                        <div class="broken-clouds">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'overcast clouds' %}
+                                        <div class="overcast-clouds">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+
+                                    {% elif day.description == 'light rain' %}
+                                        <div class="light-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'moderate rain' %}
+                                        <div class="moderate-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'heavy intensity rain' %}
+                                        <div class="heavy-intensity-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'very heavy rain' %}
+                                        <div class="very-heavy-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'extreme rain' %}
+                                        <div class="extreme-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+
+                                    {% elif day.description == 'light intensity drizzle' %}
+                                        <div class="light-intensity-drizzle">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'drizzle' %}
+                                        <div class="drizzle">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'heavy intensity drizzle' %}
+                                        <div class="heavy-intensity-drizzle">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+
+                                    {% elif day.description == 'thunderstorm with light rain' %}
+                                        <div class="thunderstorm-with-light-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'thunderstorm with rain' %}
+                                        <div class="thunderstorm-with-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'thunderstorm with heavy rain' %}
+                                        <div class="thunderstorm-with-heavy-rain">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'light thunderstorm' %}
+                                        <div class="light-thunderstorm">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'thunderstorm' %}
+                                        <div class="thunderstorm">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+
+                                    {% elif day.description == 'light snow' %}
+                                        <div class="light-snow">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'snow' %}
+                                        <div class="snow">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'heavy snow' %}
+                                        <div class="heavy-snow">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'sleet' %}
+                                        <div class="sleet">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'shower sleet' %}
+                                        <div class="shower-sleet">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+
+                                    {% elif day.description == 'mist' %}
+                                        <div class="mist">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'smoke' %}
+                                        <div class="smoke">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'haze' %}
+                                        <div class="haze">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'dust' %}
+                                        <div class="dust">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'fog' %}
+                                        <div class="fog">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'sand' %}
+                                        <div class="sand">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'volcanic ash' %}
+                                        <div class="volcanic-ash">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'squalls' %}
+                                        <div class="squalls">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% elif day.description == 'tornado' %}
+                                        <div class="tornado">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+
+                                    {% else %}
+                                        <div class="generic">
+                                            <h3>{{ day.date }}</h3>
+                                            <p>Temperature: {{ day.temperature }}°C</p>
+                                            <p>Description: {{ day.description }}</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </section>
+         <button  onclick="location.href='{% url 'home' %}'" class="back-button">BACK</button>
+
+    </main>
+
+    <footer>
+        <div class="additional-info">
+            <p>Weather information - Made easy in your hands</p>
+        </div>
+        <p>&copy; 2023 BJ Weather App. All rights reserved.</p>
+        <p>By using our services, you agree to our <a href="{% url 'privacy_terms' %}">Privacy Policy and Terms of Services</a> </p>
+        <!-- Legal information and links to privacy policy, terms of service, etc. -->
+    </footer>
+
+    <script src="{% static 'app.js' %}"></script>
+</body>
+</html>

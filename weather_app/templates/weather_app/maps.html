@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maps</title>
+    <link rel="icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+
+
+        form {
+            margin-left: 3%;
+            margin-top: 2%;
+            margin-bottom: 3%;
+            display: flex;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h3{
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+        }
+
+       label {
+            display: block;
+            margin-bottom: 1px;
+            font-size: 1.5rem;
+            color: dark-gray;
+            margin-right: 3px;
+        }
+
+        select {
+            width: 100%;
+            padding: 0.7rem;
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            border: 1px solid #ccc; /* Light Gray */
+            border-radius: 5px;
+            background-color: #fff;
+        }
+
+        input {
+            padding: 0.1rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 5px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        #map {
+            height: 600px;
+            margin-left: 2.8%;
+            width: 92%;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+        }
+
+        footer {
+            background-color: #3cb371;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        button.back-button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 1rem;
+            margin-left: 1rem;
+        }
+
+        button.back-button:hover {
+            background-color: #c0392b;
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            margin-left: 2px;
+        }
+
+        .homehref:hover, .abouthref:hover, .feedbackhref:hover, .logouthref:hover {
+            color: #e74c3c; /* Change color on hover */
+        }
+
+        .homehref{
+            position: absolute;
+            top: 7rem;
+            right: 16.5rem;
+            transition: color 0.3s;
+        }
+        .abouthref{
+            position: absolute;
+            top: 7rem;
+            right: 12.5rem;
+            transition: color 0.3s;
+        }
+        .feedbackhref{
+            position: absolute;
+            top: 7rem;
+            right: 7rem;
+            transition: color 0.3s;
+        }
+        .logouthref{
+            position: absolute;
+            top: 7rem;
+            right: 3rem;
+            transition: color 0.3s;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'D.png' %}" alt="Weather Logo" class="logo">
+        <h1>Maps</h1>
+        <div class="live-time" id="live-time"></div>
+        <h3>User: {{ request.session.username }}</h3>
+        <div> <a href="{% url 'home' %}" class="homehref">Home |</a></div>
+        <div> <a href="{% url 'about' %}" class="abouthref">About |</a></div>
+        <div> <a href="{% url 'feedback' %}" class="feedbackhref">Feedback |</a></div>
+        <div> <a href="{% url 'logout' %}" class="logouthref">Logout</a></div>
+        <div class="live-date" id="live-date"></div>
+    </header>
+
+
+
+    <form id="cityForm">
+        <br>
+        <input type="text" id="city" name="city" placeholder="Enter city name" required>
+        <button type="button" onclick="locateCity()" id="refresh-button">Locate City</button>
+    </form>
+
+    <!-- Create a div to hold the map -->
+    <div id="map"></div>
+
+    <!-- Include Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        var mymap = L.map('map');
+        var marker;
+
+        function locateCity() {
+            var cityInput = document.getElementById('city').value;
+
+            var geocodeUrl = 'https://api.opencagedata.com/geocode/v1/json?q=' + cityInput + '&key=735083eec7fc4e979481ce78d4c135db';
+
+            fetch(geocodeUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.results.length > 0) {
+                        var cityCoordinates = [data.results[0].geometry.lat, data.results[0].geometry.lng];
+
+                        // Set the map view to the city coordinates
+                        mymap.setView(cityCoordinates, 13);
+
+                        // Remove previous marker if exists
+                        if (marker) {
+                            mymap.removeLayer(marker);
+                        }
+
+                        // Add a marker for the city
+                        marker = L.marker(cityCoordinates).addTo(mymap);
+                    } else {
+                        alert('City not found. Please enter a valid city.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching geocoding data:', error);
+                });
+        }
+
+        // Set a default view (e.g., center of the world)
+        mymap.setView([0, 0], 2);
+
+        // Add the OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(mymap);
+    </script>
+
+    <button class="back-button" onclick="location.href='{% url 'home' %}'">Back</button>
+</body>
+ <footer>
+        <div class="additional-info">
+            <p>Maps - Made easy in your hands</p>
+        </div>
+        <p>&copy; 2023 BJ Maps App. All rights reserved.</p>
+        <p>By using our services, you agree to our <a href="{% url 'privacy_terms' %}">Privacy Policy and Terms of Services</a> </p>
+        <!-- Legal information and links to privacy policy, terms of service, etc. -->
+    </footer>
+    <script src="{% static 'app.js' %}"></script>
+</html>

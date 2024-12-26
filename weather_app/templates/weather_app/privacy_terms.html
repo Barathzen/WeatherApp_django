@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy and Terms of Service</title>
+    <link rel="icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>BJ Weather and Maps</h1>
+    </header>
+
+    <section id="privacy-policy">
+        <h2>Privacy Policy</h2>
+        <p>Your privacy is important to us. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you use our weather app.
+
+            Information Collection and Usage: We collect certain information when you use the Weather App to provide you with accurate and personalized weather forecasts. This may include your location data, device information, and other relevant data. We use this information solely for the purpose of delivering weather-related services and enhancing your user experience. Rest assured, we prioritize the security and confidentiality of your data and do not share your personally identifiable information with third parties without your explicit consent.
+
+            Data Security and Retention: We take stringent measures to safeguard your data from unauthorized access, disclosure, alteration, and destruction. Our systems are designed to encrypt and protect your information during transmission and storage. We retain your data only for as long as necessary to fulfill the purposes outlined in this Privacy Policy. You have the right to access, correct, and delete your personal information. If you have any concerns about the security or handling of your data, please contact us.
+
+            Changes to the Privacy Policy: As we continue to improve and expand our services, this Privacy Policy may be updated to reflect changes in our practices and legal requirements. We encourage you to periodically review this policy for any modifications. By using the Weather App, you signify your acceptance of this Privacy Policy. If you do not agree with the terms outlined herein, please refrain from using our services.
+        </p>
+
+        <!-- Add more details about your privacy policy here -->
+
+    </section>
+
+    <section id="terms-of-service">
+        <h2>Terms of Service</h2>
+        <p>By using the Weather App, you agree to comply with and be bound by the following terms and conditions. Please read these terms carefully before using the app.
+
+            Acceptance of Terms: By accessing or using the Weather App, you agree to be bound by these Terms of Service. If you do not agree with any part of these terms, you may not use our services. These terms constitute a legal agreement between you and BJ Weather App, outlining your rights and responsibilities as a user.
+
+            User Conduct and Responsibilities: When using the Weather App, you agree to abide by all applicable laws and regulations. You are solely responsible for the accuracy and appropriateness of the data you provide, including but not limited to location information. Any misuse, unauthorized access, or interference with the app's functionality is strictly prohibited.
+
+            Limitation of Liability and Disclaimer: BJ Weather App is not liable for any direct, indirect, incidental, special, or consequential damages arising out of or in any way connected with the use or inability to use our services. While we strive for accurate and timely weather information, we cannot guarantee the completeness, reliability, or suitability of the content provided. Users are advised to use their discretion when relying on weather forecasts for decision-making.
+        </p>
+
+        <!-- Add more details about your terms of service here -->
+
+    </section>
+    <button onclick="goBack()" class="back-button">BACK</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
+
+    <footer>
+        <p>&copy; 2023 BJ Weather App. All rights reserved.</p>
+    </footer>
+
+</body>
+</html>

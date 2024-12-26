@@ -1,0 +1,242 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback</title>
+    <link rel="icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow-y: hidden;
+            background-color: #1f618d;
+            color: #fff;
+            text-align: center;
+        }
+
+        header {
+            background-color: #3cb371;
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        .logo {
+            width: 95px;
+            margin-right: 10px;
+        }
+
+        .homehref{
+            position: absolute;
+            top: 7rem;
+            right: 11rem;
+        }
+        .abouthref{
+            position: absolute;
+            top: 7rem;
+            right: 7rem;
+        }
+
+        .logouthref {
+            position: absolute;
+            top: 7rem;
+            right: 2.8rem;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Arapey', serif;
+            font-size: 2rem;
+        }
+
+        .live-time {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 9rem;
+            color: white;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: 'Arapey', serif;
+            font-size: 2rem;
+        }
+
+        .form-container {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 3%;
+            margin-left: 20%;
+            flex-wrap: wrap;
+            max-width: 50%;
+        }
+
+        .form {
+            flex: 1;
+            background-color: #fff; /* Form background color */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin: 0 10px; /* Add margin between forms */
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        h3{
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+        }
+
+        input {
+            margin-top: 10px;
+            border-radius: 5px;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+        }
+        textarea{
+            margin-top: 10px;
+            border-radius: 5px;
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #3498db;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button.back-button{
+            position: absolute;
+            bottom: 13rem;
+            left: 1rem;
+        }
+        button:hover {
+            background-color: #2980b9; /* Belize Hole */
+        }
+        button.back-button:hover {
+            background-color: #c0392b;
+        }
+
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ccc;
+            margin: 20px 0;
+        }
+
+         a {
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            margin-left: 2px;
+        }
+
+
+        a:hover {
+            text-decoration: underline; /* Underline on hover for better visibility */
+        }
+
+        footer {
+            background-color: #3cb371; /* Emerald Green */
+            color: #fff;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            margin-top: 2.5%;
+        }
+
+        .additional-info {
+            margin-top: 1rem;
+        }
+
+        .live-date {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 13.5rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'D.png' %}" alt="Weather Logo" class="logo">
+        <h1>Feedback</h1>
+        <div class="live-time" id="live-time"></div>
+        <h3>User: {{ request.session.username }}</h3>
+        <div> <a href="{% url 'home' %}" class="homehref">Home |</a></div>
+        <div> <a href="{% url 'about' %}" class="abouthref">About |</a></div>
+        <div> <a href="{% url 'logout' %}" class="logouthref">Logout</a></div>
+        <div class="live-date" id="live-date"></div>
+    </header>
+
+    <div class="form-container">
+        <!-- Feedback Form -->
+        <div class="form">
+            <form method="post" action="{% url 'feedback' %}">
+                {% csrf_token %}
+                <h2>Feedback</h2>
+
+                {% if submitted %}
+                    <p style="color: green;">Thank you for your feedback!</p>
+                {% endif %}
+
+                <input type="email" id="username" name="username" placeholder="Enter Username" value='{{ request.session.username }}' required>
+                <br>
+                <textarea id="feedback" name="feedback" rows="5" placeholder=" Feedback Message" required></textarea>
+                <br>
+                <button type="submit">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+    <button onclick="goBack()" class="back-button">BACK</button>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+    <footer>
+        <div class="additional-info">
+            <p>Explore the world with BJ weather forecasts and maps</p>
+        </div>
+        <p>&copy; 2023 Weather and Maps App. All rights reserved.</p>
+        <p>By using our services, you agree to our <a href="{% url 'privacy_terms' %}">Privacy Policy and Terms of Services</a> </p>
+    </footer>
+    <script src="{% static 'app.js' %}"></script>
+
+</html>

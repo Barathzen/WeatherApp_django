@@ -1,0 +1,201 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="shortcut icon" href="{% static 'D.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <style>
+        /* Internal CSS */
+        body {
+            font-family: 'Quicksand', sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: #1f618d;
+            color: #333;
+        }
+
+        header {
+            background-color: #3cb371;
+            color: #fff;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            width: 95px;
+            margin-right: 10px;
+        }
+
+        h3 {
+            position: absolute;
+            top: 3rem;
+            right: 3rem;
+        }
+
+        .homehref:hover, .abouthref:hover, .feedbackhref:hover, .logouthref:hover {
+            color: #e74c3c; /* Change color on hover */
+        }
+
+        .abouthref, .feedbackhref, .logouthref {
+            text-decoration: none;
+            position: absolute;
+            top: 7rem;
+        }
+
+        .abouthref { right: 12.5rem; }
+        .feedbackhref { right: 7rem; }
+        .logouthref { right: 3rem; }
+
+        h1 {
+            margin: 0;
+            font-family: 'Arapey', serif;
+            font-size: 2rem;
+        }
+
+        .live-time {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 9rem;
+            color: white;
+        }
+
+        main {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .weather, .maps {
+            width: 100%;
+            border-radius: 5px;
+        }
+
+        .options {
+            margin-top: 2%;
+            margin-left: 15%;
+            width: 70%;
+            display: flex;
+            gap: 10%; /* Adjust the gap as needed */
+        }
+
+        a {
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            cursor: pointer; /* Add cursor pointer for better UX */
+        }
+
+        /* Option card styling */
+        .option, .option-card {
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-decoration: none;
+            text-align: center;
+            color: #fff;
+            font-size: 100%;
+            font-weight: bold;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .option-card:hover, .option:hover {
+            transform: scale(1.05);
+        }
+
+        .option {
+            background-color: white;
+            color:  #1f618d;
+            border: 1px solid #2980b9;
+            width: 100%; /* Adjust the width as needed */
+        }
+
+        .option-card {
+            background-color: #3498db;
+            border: 1px solid #2980b9;
+        }
+
+        .option img, .option-card img {
+            width: 100%;
+            border: 3px solid #33495F;
+            border-radius: 10px;
+        }
+
+        /* Footer styling */
+        footer {
+            background-color: #3cb371;
+            color: #fff;
+            text-align: center;
+            max-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            margin-top: 2%;
+        }
+
+        .additional-info {
+            margin-top: 1rem;
+        }
+
+        /* Live date display */
+        .live-date {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 13.5rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="{% static 'D.png' %}" alt="Weather Logo" class="logo">
+        <h1>Weather and Maps</h1>
+        <div class="live-time" id="live-time"></div>
+        <h3>Welcome, {{ request.session.username }}!</h3>
+        <div><a href="{% url 'about' %}" class="abouthref">About |</a></div>
+        <div><a href="{% url 'feedback' %}" class="feedbackhref">Feedback |</a></div>
+        <div><a href="{% url 'logout' %}" class="logouthref">Logout</a></div>
+        <div class="live-date" id="live-date"></div>
+    </header>
+
+    <main>
+        <div class="options">
+            <a href="{% url 'redirect_to_weather_forecast' %}" class="option">
+                <img src="{% static 'weather_gif.gif' %}" alt="weather" class="weather"><br><br><br>
+                Weather Forecast
+            </a>
+            <a href="{% url 'redirect_to_maps' %}" class="option">
+                <img src="{% static 'map_gif.gif' %}" alt="maps" class="maps"><br><br><br>
+                Maps
+            </a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="additional-info">
+            <p>Explore the world with BJ weather forecasts and maps</p>
+        </div>
+        <p>&copy; 2023 Weather and Maps App. All rights reserved.</p>
+        <p>By using our services, you agree to our <a href="{% url 'privacy_terms' %}">Privacy Policy and Terms of Services</a></p>
+    </footer>
+
+    <script src="{% static 'app.js' %}"></script>
+</body>
+</html>
