@@ -1,0 +1,194 @@
+/* styles.css */
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #1f618d;
+    color: #333;
+}
+
+header {
+    background-color: #3cb371;
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 95px;
+    margin-right: 10px;
+}
+
+h1 {
+    margin: 0;
+    font-family: 'Arapey', serif;
+    font-size: 2rem;
+}
+
+ a {
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            margin-left: 2px;
+        }
+
+
+.homehref{
+     position: absolute;
+     top: 7rem;
+     right: 12.5rem;
+}
+
+.feedbackhref{
+     position: absolute;
+     top: 7rem;
+     right: 12.5rem;
+}
+.logouthref{
+     position: absolute;
+     top: 7rem;
+     right: 12.5rem;
+}
+.live-time {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 9rem;
+            color: white;
+        }
+
+#city {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #e74c3c;
+
+}
+
+main {
+    padding: 2rem;
+}
+
+.location-selection {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    color: #555; /* Dark Gray */
+}
+
+select {
+    width: 100%;
+    padding: 0.7rem;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc; /* Light Gray */
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.weather-cards {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.weather-card {
+    background-color: #ffd699; /* Peach */
+    border: 1px solid #ff9966; /* Light Coral */
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem;
+    width: 45%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.weather-card:hover {
+    transform: scale(1.05);
+}
+
+h2 {
+    color: #e74c3c; /* Alizarin Crimson */
+}
+
+#refresh-button {
+    background-color: #3498db; /* Dodger Blue */
+    color: #fff;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+#refresh-button:hover {
+    background-color: #2980b9; /* Belize Hole */
+}
+
+footer {
+    background-color: #3cb371; /* Emerald Green */
+    color: #fff;
+    text-align: center;
+    padding: 1.5rem;
+}
+
+.additional-info {
+    margin-top: 1rem;
+}
+
+.live-date {
+            font-size: 1rem;
+            font-weight: bold;
+            position: absolute;
+            top: 7rem;
+            left: 13.5rem;
+            color: white;
+}
+
+.snowy {
+    background-image: url('{% static 'snowy.gif' %}');
+}
+
+.drizzle {
+    background-image: url('{% static 'drizzle.gif' %}');
+    border: 1px solid #ff9966; /* Light Coral */
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin: 1rem;
+    width: 45%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
+
+.atmospheric {
+    background-image: url('{% static 'atmospheric.gif' %}');
+}
+
+.clear {
+    background-image: url('{% static 'clear.gif' %}');
+}
+
+.cloudy {
+    background-image: url('{% static 'cloudy.gif' %}');
+}
+
+.rainy {
+    background-image: url('{% static 'rainy.gif' %}');
+}
+
+.stormy {
+    background-image: url('{% static 'stormy.gif' %}');
+}
+
+.generic {
+    background-image: url('{% static 'default.gif' %}'); /* Default for unknown conditions */
+}
