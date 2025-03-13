@@ -1,7 +1,7 @@
 # WeatherApp_django
 a weather forcasting app using django and mongodb
 
-step in command prompt
+steps in command prompt
 
 cd weather_app
 
